@@ -3,12 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TColors {
   // Define primary, secondary, and other colors
-  static const Color primary = Color(0xff355F2E); // Green
-  static const Color secondary = Color(0xffFFE3E3); // Blue
-  static const Color background = Color(0xffFEF9F2); // Light grey
-  static const Color accent = Color(0xffC9E9D2); // Amber
+  static const Color primary = Color(0xff78B3CE); // Green
+  static const Color secondary = Color(0xffC9E6F0); // Blue
+  static const Color background = Color(0xffFBF8EF); // Light grey
+  static const Color accent = Color(0xffF96E2A); // Amber
+   static const Color light = Color(0xffF5EDED);
   static const Color darkbg = Color(0xFF212121); // Dark grey
-  static const Color textSecondary = Color(0xff000B58); // Light grey
+  static const Color grey = Color.fromARGB(255, 75, 75, 75); // Light grey
 
   // Define fonts using Google Fonts
 
@@ -25,33 +26,46 @@ class TColors {
   );
 
 
-  static final TextStyle titleStyle = GoogleFonts.inter(
+  static final TextStyle titleStyle = GoogleFonts.lexend(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: darkbg,
   );
 
-  static final TextStyle bodyStyle = GoogleFonts.lato(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    color: textSecondary,
+  static final TextStyle bodyStyle = GoogleFonts.lexendDeca(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: grey,
   );
 
-  static final TextStyle buttonStyle = GoogleFonts.lato(
-    fontWeight: FontWeight.w800,
+  static final TextStyle buttonStyle = GoogleFonts.lexendDeca(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: grey,
+  );
+
+  static final TextStyle captionStyle = GoogleFonts.lexend(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
     color: darkbg,
   );
-
-  static final TextStyle captionStyle = GoogleFonts.inter(
+    static final TextStyle authorStyle = GoogleFonts.lexendDeca(
     fontSize: 13,
-    fontWeight: FontWeight.bold,
-    color: darkbg,
+    fontWeight: FontWeight.w400,
+    color: grey,
   );
-  static final TextStyle authorStyle = GoogleFonts.lato(
+
+  static final TextStyle booktitle = GoogleFonts.lexend(
     fontSize: 10,
     fontWeight: FontWeight.w600,
-    color: Colors.grey,
+    color: darkbg,
   );
+  static final TextStyle bookauthor = GoogleFonts.lexendDeca(
+    fontSize: 8,
+    fontWeight: FontWeight.w400,
+    color: grey,
+  );
+
 
   // Create reusable theme data
   // static ThemeData get themeData {

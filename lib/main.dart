@@ -1,8 +1,15 @@
+import 'package:booking_management/bookprovide.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => BookProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      
       title: 'Library App',
-      home: BotttomNagivationBar(),
+      home: BottomNavigationBarWidget(),
     );
   }
 }

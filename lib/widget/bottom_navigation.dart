@@ -1,17 +1,21 @@
 import 'package:booking_management/models/appTheme.dart';
 import 'package:booking_management/screen/booklist_screen.dart';
 import 'package:booking_management/screen/home_screen.dart';
-import 'package:booking_management/screen/profile_screen.dart';
+//import 'package:booking_management/screen/profile_screen.dart';
+import 'package:booking_management/screen/search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_decoration/icon_decoration.dart';
 
-class BotttomNagivationBar extends StatefulWidget {
-  const BotttomNagivationBar({super.key});
+class BottomNavigationBarWidget extends StatefulWidget {
+  const BottomNavigationBarWidget({super.key});
 
   @override
-  _BotttomNagivationBarState createState() => _BotttomNagivationBarState();
+  _BottomNavigationBarWidgetState createState() =>
+      _BottomNavigationBarWidgetState();
 }
 
-class _BotttomNagivationBarState extends State<BotttomNagivationBar> {
+class _BottomNavigationBarWidgetState
+    extends State<BottomNavigationBarWidget> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -22,45 +26,72 @@ class _BotttomNagivationBarState extends State<BotttomNagivationBar> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-     const BookListScreen(),
-    const ProfileScreen(),
+    const BookListScreen(),
+    //const ProfileScreen(),
+    const SearchScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // final book = books[index];
-
     return Scaffold(
-        body: Container(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, color: TColors.primary,  size: 30),
-              label: 'Home',
-             backgroundColor: TColors.background,
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: DecoratedIcon(
+              icon: Icon(
+                Icons.home_rounded,
+                color: _selectedIndex == 0 ? TColors.primary : Colors.white,
+                size: 30,
+              ),
+              decoration: const IconDecoration(border: IconBorder()),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book_outlined,color: TColors.primary,  size: 30),
-              label: 'Books',
-             backgroundColor: TColors.background,
+            label: 'Home',
+            backgroundColor: TColors.background,
+          ),
+          BottomNavigationBarItem(
+            icon: DecoratedIcon(
+              icon: Icon(
+                Icons.library_books_rounded,
+                color: _selectedIndex == 1 ? TColors.primary : Colors.white,
+                size: 30,
+              ),
+              decoration: const IconDecoration(border: IconBorder()),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_outlined, color: TColors.primary, size: 30),
-              label: 'Profile',
-             backgroundColor: TColors.background,
+            label: 'Books',
+            backgroundColor: Colors.white,
+          ),
+          // BottomNavigationBarItem(
+          //   icon: DecoratedIcon(
+          //     icon: Icon(
+          //       Icons.person_2_rounded,
+          //       color: _selectedIndex == 2 ? TColors.primary : Colors.white,
+          //       size: 30,
+          //     ),
+          //     decoration: const IconDecoration(border: IconBorder()),
+          //   ),
+          //   label: 'Profile',
+          //   backgroundColor: Colors.white,
+          // ),
+          BottomNavigationBarItem(
+            icon: DecoratedIcon(
+              icon: Icon(
+                Icons.search_rounded,
+                color: _selectedIndex == 2 ? TColors.primary : Colors.white,
+                size: 30,
+              ),
+              decoration: const IconDecoration(border: IconBorder()),
             ),
-          ],
-          
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.grey,
-          selectedIconTheme: const IconThemeData(color: TColors.secondary),
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.shifting,
-          unselectedIconTheme: const IconThemeData(color: TColors.primary,
-        ),
-        ),
+            label: 'Search',
+            backgroundColor: Colors.white,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: TColors.darkbg,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.shifting,
+        unselectedItemColor: Colors.grey,
+      ),
     );
   }
 }
