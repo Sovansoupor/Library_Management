@@ -1,5 +1,5 @@
-import 'package:booking_management/dummy/dummyBook.dart'; // Assuming your list of books is here
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/dummy/dummy_book.dart'; // Assuming your list of books is here
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/models/book.dart';
 import 'package:booking_management/screen/booklist_screen.dart';
 import 'package:booking_management/widget/search_bar.dart';
@@ -19,14 +19,14 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _filteredBooks = []; // Initialize with all books from the collection
+    _filteredBooks = [];
   }
 
   // Method to filter books based on search input
   void _filterBooks(String query) {
     if (query.isEmpty) {
       setState(() {
-        _filteredBooks = booklists; // Show all books if the search query is empty
+        _filteredBooks = booklists; 
       });
     } else {
       setState(() {
@@ -36,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
           final genresLower = book.genres.join(' ').toLowerCase();
           final queryLower = query.toLowerCase();
           
-          // Check if the query matches title, author, or genres
+// Check if the query matches title, author, or genres
           return titleLower.contains(queryLower) ||
               authorLower.contains(queryLower) ||
               genresLower.contains(queryLower);

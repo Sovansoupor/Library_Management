@@ -1,4 +1,4 @@
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
 
@@ -21,9 +21,8 @@ class BorrowScreen extends StatefulWidget {
 class _BorrowScreenState extends State<BorrowScreen> {
   DateTime? _pickupDate;
   int _borrowDays = 1;
-  bool _isLoading = false; // For loading indicator
+  bool _isLoading = false;
 
-  // Calendar
   void _pickDate() async {
     if (!widget.isReservation) {
       DateTime? selectedDate = await showDatePicker(
@@ -39,14 +38,12 @@ class _BorrowScreenState extends State<BorrowScreen> {
         });
       }
     } else {
-      // Automatically set the pickup date to today for reservations
       setState(() {
         _pickupDate = DateTime.now();
       });
     }
   }
 
-  // Confirmation and Successful Messages
   void _confirmAction() async {
     if (!widget.isReservation && _pickupDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,7 +52,6 @@ class _BorrowScreenState extends State<BorrowScreen> {
       return;
     }
 
-    // Show confirmation dialog
     final bool? confirm = await showDialog(
       context: context,
       builder: (context) {
@@ -66,15 +62,14 @@ class _BorrowScreenState extends State<BorrowScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false), // Cancel
+              onPressed: () => Navigator.of(context).pop(false),
               child: const Text("Cancel"),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true), // Confirm
+              onPressed: () => Navigator.of(context).pop(true),
               child: const Text(
                 "Confirm",
-                style:
-                    TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -82,23 +77,19 @@ class _BorrowScreenState extends State<BorrowScreen> {
       },
     );
 
-    if (confirm != true) return; // Exit if not confirmed
+    if (confirm != true) return;
 
-    // Show loading indicator
     setState(() {
       _isLoading = true;
     });
 
-    // Handle the action (reservation or borrowing)
     bool success;
     if (widget.isReservation) {
       success = await createReservation(widget.bookTitle);
     } else {
-      success =
-          await createBorrowing(widget.bookTitle, _pickupDate!, _borrowDays);
+      success = await createBorrowing(widget.bookTitle, _pickupDate!, _borrowDays);
     }
 
-    // Hide loading indicator
     setState(() {
       _isLoading = false;
     });
@@ -113,39 +104,35 @@ class _BorrowScreenState extends State<BorrowScreen> {
           ),
         ),
       );
-      widget.onSuccess(); // Notify parent widget
-      Navigator.of(context).popUntil((route) => route.isFirst); 
-      Navigator.of(context).pushReplacementNamed('/home');
+      widget.onSuccess();
+      Navigator.of(context).pop(); 
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Failed to complete the action. Please try again.")),
+        const SnackBar(content: Text("Failed to complete the action. Please try again.")),
       );
     }
   }
 
-  // Return Date Display
- DateTime? get returnDate {
-  if (_pickupDate != null) {
-    return _pickupDate!.add(Duration(days: _borrowDays));
+  DateTime? get returnDate {
+    if (_pickupDate != null) {
+      return _pickupDate!.add(Duration(days: _borrowDays));
+    }
+    return null;
   }
-  return null;
-}
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: TColors.primary,
       appBar: AppBar(
-        title: Text(widget.isReservation ? "Reserve Book" : "Borrow Book",
-            style: TColors.titleStyle),
+        title: Text(widget.isReservation ? "Reserve Book" : "Borrow Book", style: TColors.titleStyle),
         backgroundColor: TColors.secondary,
       ),
       body: Stack(
         children: [
           Align(
-        alignment: Alignment.topCenter,
+            alignment: Alignment.topCenter,
             child: Container(
               width: media.width,
               height: media.width * 0.8,
@@ -165,10 +152,11 @@ class _BorrowScreenState extends State<BorrowScreen> {
               children: [
                 Text(
                   widget.bookTitle,
-                   style: TColors.titleStyle.copyWith(
-                letterSpacing: -0.7, // Reduce space between letters
-                height: 1.2, // Adjust line height (line spacing)
-              ),),
+                  style: TColors.titleStyle.copyWith(
+                    letterSpacing: -0.7, 
+                    height: 1.2, 
+                  ),
+                ),
                 const SizedBox(height: 20),
                 if (!widget.isReservation)
                   ListTile(
@@ -180,20 +168,19 @@ class _BorrowScreenState extends State<BorrowScreen> {
                     ),
                     trailing: OutlinedButton.icon(
                       onPressed: _pickDate,
-                      icon: const Icon(Icons.calendar_month_outlined, color: Colors.black,),
+                      icon: const Icon(Icons.calendar_month_outlined, color: Colors.black),
                       label: Text("Select Date", style: TColors.captionStyle),
                     ),
                   ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    Text("Borrow Days:",style: TColors.captionStyle),
+                    Text("Borrow Days:", style: TColors.captionStyle),
                     const SizedBox(width: 10),
                     DropdownButton<int>(
                       value: _borrowDays,
                       items: List.generate(14, (index) => index + 1)
-                          .map((days) => DropdownMenuItem(
-                              value: days, child: Text("$days day(s)")))
+                          .map((days) => DropdownMenuItem(value: days, child: Text("$days day(s)")))
                           .toList(),
                       onChanged: (value) {
                         setState(() {
@@ -214,15 +201,16 @@ class _BorrowScreenState extends State<BorrowScreen> {
                 Center(
                   child: OutlinedButton(
                     onPressed: _confirmAction,
-                    child: Text(widget.isReservation
-                        ? "Confirm Reservation"
-                        : "Confirm Borrow" , style: TColors.captionStyle),
+                    child: Text(
+                        widget.isReservation
+                            ? "Confirm Reservation"
+                            : "Confirm Borrow",
+                        style: TColors.captionStyle),
                   ),
                 ),
               ],
             ),
           ),
-          
           if (_isLoading)
             Container(
               color: Colors.black45,
@@ -234,22 +222,14 @@ class _BorrowScreenState extends State<BorrowScreen> {
   }
 }
 
-// DateTime Formatter using intl package
-extension DateTimeFormatter on DateTime {
-  String toShortDateString() {
-    return DateFormat('dd/MM/yyyy').format(this);
-  }
-}
 
-// Simulated createReservation function
 Future<bool> createReservation(String bookTitle) async {
-  await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
-  return true; // Indicate success
+  await Future.delayed(const Duration(seconds: 1)); 
+  return true; 
 }
 
-// Simulated createBorrowing function
-Future<bool> createBorrowing(
-    String bookTitle, DateTime pickupDate, int borrowDays) async {
-  await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
-  return true; // Indicate success
+
+Future<bool> createBorrowing(String bookTitle, DateTime pickupDate, int borrowDays) async {
+  await Future.delayed(const Duration(seconds: 1)); 
+  return true; 
 }

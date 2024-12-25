@@ -1,4 +1,5 @@
-import 'package:booking_management/models/appTheme.dart';
+
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/models/book.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,14 @@ class CollectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final returnDate = book.returnDate ?? now.add(const Duration(days: 3));
+    final returnDate = book.borrowStatuses.isNotEmpty
+        ? book.borrowStatuses.last.returnDate ?? now.add(const Duration(days: 14))
+        : now.add(const Duration(days: 14)); // Default return date if no status
+
     final daysLeft = returnDate.difference(now).inDays;
 
-    // Calculate progress value for progress bar
-    const int totalDays = 14; // 14-day borrow period (2 weeks)
+    // Calculate progress value
+    const int totalDays = 14; // 2-week borrow period
     final progress = daysLeft >= 0 ? (totalDays - daysLeft) / totalDays : 1.0;
 
     return Container(
@@ -35,7 +39,7 @@ class CollectionCard extends StatelessWidget {
           ),
         ],
       ),
-      width: 400,
+      width: 500,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

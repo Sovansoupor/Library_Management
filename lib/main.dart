@@ -1,4 +1,4 @@
-import 'package:booking_management/bookprovide.dart';
+import 'package:booking_management/models/bookprovide.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'widget/bottom_navigation.dart';

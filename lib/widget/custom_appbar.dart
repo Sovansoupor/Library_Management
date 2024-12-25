@@ -1,5 +1,4 @@
-import 'package:booking_management/models/appTheme.dart';
-import 'package:booking_management/screen/profile_screen.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,8 +19,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       backgroundColor: TColors.primary,
       elevation: 2.5,
-      title: Container(
-        alignment: Alignment.centerLeft,
+      centerTitle: false,
+      title: Padding(
+       padding: const EdgeInsets.only(left: 10, top: 18),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,7 +42,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
               const SizedBox(height: 4),
               Text(
-                "Today $currentDate", // Display dynamic date
+                "Today $currentDate", 
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black38,
@@ -50,16 +50,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
             ],
           ),
-      ),
-      
-      leading: GestureDetector(
-        onTap: () {
-          // Navigate to ProfileScreen
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ProfileScreen()),
-          );
-        },
       ),
       actions: [
         Padding(
@@ -70,8 +60,3 @@ class _CustomAppBarState extends State<CustomAppBar> {
     );
   }
 }
-
-        // child: const CircleAvatar(
-        //   radius: 10, // Adjust size to fit AppBar
-        //   backgroundImage: AssetImage("assets/meow.jpg"),
-        // ),

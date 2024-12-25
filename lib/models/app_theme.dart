@@ -51,7 +51,7 @@ class TColors {
   );
     static final TextStyle authorStyle = GoogleFonts.lexendDeca(
     fontSize: 13,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     color: grey,
   );
 
@@ -65,30 +65,4 @@ class TColors {
     fontWeight: FontWeight.w400,
     color: grey,
   );
-
-
-  // Create reusable theme data
-  // static ThemeData get themeData {
-  //   return ThemeData(
-  //     primaryColor: primary,
-  //     scaffoldBackgroundColor: background,
-  //     textTheme: TextTheme(
-  //       headline: titleStyle,
-  //       bodyText: bodyStyle,
-  //       button: buttonStyle,
-  //       caption: captionStyle,
-  //     ),
-  //     appBarTheme: AppBarTheme(
-  //       backgroundColor: primary,
-  //       titleTextStyle: titleStyle.copyWith(color: Colors.white),
-  //       iconTheme: const IconThemeData(color: Colors.white),
-  //     ),
-  //     elevatedButtonTheme: ElevatedButtonThemeData(
-  //       style: ElevatedButton.styleFrom(
-  //         backgroundColor: primary,
-  //         textStyle: buttonStyle,
-  //       ),
-  //     ),
-  //   );
-  // }
 }

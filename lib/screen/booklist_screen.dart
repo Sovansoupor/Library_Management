@@ -1,6 +1,6 @@
-import 'package:booking_management/bookprovide.dart';
-import 'package:booking_management/dummy/dummyBook.dart';
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/models/bookprovide.dart';
+import 'package:booking_management/dummy/dummy_book.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/models/book.dart';
 import 'package:booking_management/screen/collection_screen.dart';
 import 'package:booking_management/widget/book_detail.dart';
@@ -19,26 +19,9 @@ class BookListScreen extends StatefulWidget {
 }
 
 class _BookListScreenState extends State<BookListScreen> {
- 
-
-  // Method for borrowing a book
-  // void _borrowBook(Book book) {
-  //   setState(() {
-  //     borrowedBooks.add(book);
-  //   });
-  // }
-
-  // // Method for reserving a book
-  // void _reserveBook(Book book) {
-  //   setState(() {
-  //     reservedBooks.add(book);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final bookProvider = Provider.of<BookProvider>(context);
-    // Get the dummy data
     final books = booklists;
 
     // Split the genre string ("Fiction & Fantasy")
@@ -49,10 +32,11 @@ class _BookListScreenState extends State<BookListScreen> {
     // Filter books by genre(s) if genre is provided
     final filteredBooks = genresToFilter.isNotEmpty
         ? books.where((book) {
-            return book.genres
-                .any((bookGenre) => genresToFilter.contains(bookGenre));
+            return book.genres.any((bookGenre) => 
+                genresToFilter.contains(bookGenre.name)); // Compare names
           }).toList()
         : books;
+
 
     return Scaffold(
       backgroundColor: TColors.background,
@@ -71,25 +55,27 @@ class _BookListScreenState extends State<BookListScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CollectionScreen(
-                              borrowedBooks: bookProvider.borrowedBooks, 
-                              reservedBooks: bookProvider.reservedBooks
-                              )),
-                      );
-                    },
-                    icon: const DecoratedIcon(
-                      icon: Icon(
-                        Icons.library_add_rounded,
-                        size: 30,
-                        color: TColors.primary,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CollectionScreen(
+                          borrowedBooks: bookProvider.borrowedBooks,
+                          reservedBooks: bookProvider.reservedBooks,
+                        ),
                       ),
-                      decoration: IconDecoration(border: IconBorder()),
+                    );
+                  },
+                  icon: const DecoratedIcon(
+                    icon: Icon(
+                      Icons.library_add_rounded,
+                      size: 30,
+                      color: TColors.primary,
                     ),
-                    label: Text('My Collection', style: TColors.captionStyle)),
+                    decoration: IconDecoration(border: IconBorder()),
+                  ),
+                  label: Text('My Collection', style: TColors.captionStyle),
+                ),
                 const Icon(Icons.arrow_forward_ios_rounded),
               ],
             ),
@@ -109,7 +95,7 @@ class _BookListScreenState extends State<BookListScreen> {
                 final book = filteredBooks[index];
                 return BookCard(
                   book: book,
-                onBorrow: (book) => bookProvider.borrowBook(book),
+                  onBorrow: (book) => bookProvider.borrowBook(book),
                   onReserve: (book) => bookProvider.reserveBook(book),
                 );
               },
@@ -122,7 +108,7 @@ class _BookListScreenState extends State<BookListScreen> {
 }
 
 class BookCard extends StatelessWidget {
-  final Book book; // Accept book object
+  final Book book; 
   final Function(Book) onBorrow;
   final Function(Book) onReserve;
 
@@ -131,7 +117,7 @@ class BookCard extends StatelessWidget {
     required this.book,
     required this.onBorrow,
     required this.onReserve,
-  }); // Constructor now requires a book
+  }); 
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +126,9 @@ class BookCard extends StatelessWidget {
         showCustomModal(
           context,
           book,
-          onBorrow, // Pass the onBorrow callback
-          onReserve, // Pass the onReserve callback
-        ); // Show the modal with the book data
+          onBorrow, 
+          onReserve, 
+        ); 
       },
       child: Card(
         shape: const RoundedRectangleBorder(
@@ -154,7 +140,7 @@ class BookCard extends StatelessWidget {
           children: [
             Expanded(
               child: Image.asset(
-                book.coverImage, // Use book's cover image
+                book.coverImage, 
                 fit: BoxFit.cover,
               ),
             ),
@@ -164,13 +150,13 @@ class BookCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    book.title, // Use book's title
+                    book.title, 
                     style: TColors.booktitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "By ${book.author}", // Use book's author
+                    "By ${book.author}",
                     style: TColors.bookauthor,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

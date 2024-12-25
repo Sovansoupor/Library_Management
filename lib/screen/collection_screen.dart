@@ -1,6 +1,6 @@
-// import 'package:booking_management/bookprovide.dart';
-import 'package:booking_management/bookprovide.dart';
-import 'package:booking_management/models/appTheme.dart';
+
+import 'package:booking_management/models/bookprovide.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/models/book.dart';
 import 'package:booking_management/widget/book_detail.dart';
 import 'package:booking_management/widget/borrow_card.dart';
@@ -39,8 +39,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
     showCustomModal(
       context,
       book,
-      _borrowBook, // Pass the onBorrow callback
-      _reserveBook, // Pass the onReserve callback
+      _borrowBook, // Pass the callback
+      _reserveBook, 
     );
   }
 
@@ -99,7 +99,6 @@ class _CollectionScreenState extends State<CollectionScreen> {
       body: ListView.builder(
         itemCount: widget.borrowedBooks.length + widget.reservedBooks.length,
         itemBuilder: (context, index) {
-          // Choose the book from borrowed or reserved list
           Book book = index < widget.borrowedBooks.length
               ? widget.borrowedBooks[index]
               : widget.reservedBooks[index - widget.borrowedBooks.length];

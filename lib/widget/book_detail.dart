@@ -1,7 +1,7 @@
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:booking_management/models/book.dart'; // Adjust import based on your project structure
-import 'package:booking_management/screen/borrow_screen.dart'; // Adjust import based on your project structure
+import 'package:booking_management/models/book.dart'; 
+import 'package:booking_management/screen/borrow_screen.dart'; 
 
 void showCustomModal(
   BuildContext context,
@@ -20,7 +20,7 @@ void showCustomModal(
       book: book,
       onBorrow: onBorrow,
       onReserve: onReserve,
-    ), // Pass the book to BookDetails
+    ), 
   );
 }
 
@@ -62,27 +62,37 @@ class _BookDetailsState extends State<BookDetails> {
             Text(
               widget.book.title,
               style: TColors.titleStyle.copyWith(
-                letterSpacing: -0.5, // Reduce space between letters
-                height: 1.2, // Adjust line height (line spacing)
+                letterSpacing: -0.5, 
+                height: 1.2, 
               ),
             ),
             const SizedBox(height: 10),
             Text(
               "Author: ${widget.book.author}",
               style: TColors.authorStyle.copyWith(
-                letterSpacing: -0.5, // Reduce space between letters
-                height: 1.2, // Adjust line height (line spacing)
-              ),
-            ),
-            const SizedBox(height: 3),
-            Text(
-              "Genre: ${widget.book.genres}",
-              style: TColors.authorStyle.copyWith(
-                letterSpacing: -0.5, // Reduce space between letters
-                height: 1.2, // Adjust line height (line spacing)
+                letterSpacing: -0.5, 
+                height: 1.2, 
               ),
             ),
             const SizedBox(height: 5),
+            Text(
+              "Genre: ${widget.book.genres.join(', ')}",
+              style: TColors.authorStyle.copyWith(
+                letterSpacing: -0.5, 
+                height: 1.2, 
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              "Description: ${widget.book.description}",
+              textAlign: TextAlign.justify,
+              style: TColors.authorStyle.copyWith(
+                letterSpacing: -0.5, 
+                height: 1.2, 
+              ),
+            ),
+            const SizedBox(height: 5),
+            const Divider(),
             Text(
               widget.book.isBorrowed ? "Status: Borrowed" : "Status: Available",
               style: TColors.captionStyle.copyWith(
@@ -104,10 +114,8 @@ class _BookDetailsState extends State<BookDetails> {
                   onPressed: () {
                     if (widget.book.isBorrowed) {
                       _reserveBook(context);
-                      widget.onReserve(widget.book); // Trigger the onReserve callback
                     } else {
                       _borrowBook(context);
-                       widget.onBorrow(widget.book);
                     }
                   },
                   child: Text(
@@ -124,6 +132,7 @@ class _BookDetailsState extends State<BookDetails> {
   }
 
   void _borrowBook(BuildContext context) {
+    widget.onBorrow(widget.book); // Call the onBorrow function
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -131,14 +140,15 @@ class _BookDetailsState extends State<BookDetails> {
           bookTitle: widget.book.title,
           onSuccess: () {
             setState(() {
-              
-            widget.book.isBorrowed = true; // Update the book status
+              widget.book.isBorrowed = true; // Update the book status
             });
           },
-          isReservation: false, // Indicate that this action is borrowing
+          isReservation: false,
         ),
       ),
-    );
+    ).then((_) {
+      Navigator.of(context).pop(); // Close the modal after borrowing
+    });
   }
 
   void _reserveBook(BuildContext context) {
@@ -147,28 +157,29 @@ class _BookDetailsState extends State<BookDetails> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Reservation', style: TColors.captionStyle),
-          content: Text("Are you sure you want to reserve '${widget.book.title}'?",
-              style: TColors.buttonStyle),
+          content: Text(
+            "Are you sure you want to reserve '${widget.book.title}'?",
+            style: TColors.buttonStyle,
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
               },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
-                // Call createReservation and handle success/failure
                 bool success = await createReservation(widget.book.title);
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
 
                 if (success) {
                   setState(() {
-                  widget.book.isReserved = true; // Close the BorrowScreen
-                    
+                    widget.book.isReserved = true; //Update the book status
                   });
+                  widget.onReserve(widget.book); //Call the onReserve function
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content:Text("Successfully reserved '${widget.book.title}'.")),
+                    SnackBar(content: Text("Successfully reserved '${widget.book.title}'.")),
                   );
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 } else {
@@ -184,4 +195,10 @@ class _BookDetailsState extends State<BookDetails> {
       },
     );
   }
+}
+
+
+Future<bool> createReservation(String bookTitle) async {
+  await Future.delayed(const Duration(seconds: 1)); 
+  return true; 
 }

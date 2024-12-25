@@ -1,5 +1,5 @@
-import 'package:booking_management/dummy/dummyBook.dart';
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/dummy/dummy_book.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/models/book.dart';
 import 'package:booking_management/screen/booklist_screen.dart';
 import 'package:booking_management/widget/book_detail.dart';
@@ -31,10 +31,8 @@ class _BookCollectionState extends State<BookCollection> {
   }
   @override
   Widget build(BuildContext context) {
-    // Get the screen size to make the layout responsive
     final media = MediaQuery.of(context).size;
     final itemWidth = media.width * 0.36;
-    //final listViewHeight = itemWidth * 1.8;
 
 // Navigate to BookList
     return Padding(
@@ -43,8 +41,7 @@ class _BookCollectionState extends State<BookCollection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceBetween, // Space between Title and Button
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, 
             children: [
               Text(
                 "Recommended Books",
@@ -70,9 +67,9 @@ class _BookCollectionState extends State<BookCollection> {
             child: ListView.builder(
               padding: EdgeInsets.zero,
               scrollDirection: Axis.horizontal,
-              itemCount: booklists.length, // Use your dummy list
+              itemCount: booklists.length, 
               itemBuilder: (context, index) {
-                final book = booklists[index]; // Get the current book
+                final book = booklists[index]; 
                 return Padding(
                   padding: const EdgeInsets.only(right: 6.0),
                   child: GestureDetector(
@@ -80,13 +77,13 @@ class _BookCollectionState extends State<BookCollection> {
                       showCustomModal(
                         context,
                         book,
-                        _borrowBook, // Pass the onBorrow callback
-                        _reserveBook, // Pass the onReserve callback
+                        _borrowBook, 
+                        _reserveBook, 
                       );
                     },
                     child: BookCard(
                       book: book,
-                      itemWidth: itemWidth, // Pass the calculated width
+                      itemWidth: itemWidth, 
                     ),
                   ),
                 );
@@ -101,7 +98,7 @@ class _BookCollectionState extends State<BookCollection> {
 
 class BookCard extends StatelessWidget {
   final Book book;
-  final double itemWidth; // Add this field for dynamic width
+  final double itemWidth; 
   const BookCard({
     super.key,
     required this.book,
@@ -126,11 +123,10 @@ class BookCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2),
               ),
               child: ClipRRect(
-                //borderRadius: BorderRadius.circular(1),
                 child: Image.asset(
                   book.coverImage,
-                  height: itemWidth * 1.5, // Adjust height based on width
-                  width: itemWidth, // Use dynamic width
+                  height: itemWidth * 1.5, 
+                  width: itemWidth, 
                   fit: BoxFit.cover,
                 ),
               ),

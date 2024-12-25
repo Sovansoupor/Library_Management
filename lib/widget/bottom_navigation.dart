@@ -1,4 +1,4 @@
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/models/app_theme.dart';
 import 'package:booking_management/screen/booklist_screen.dart';
 import 'package:booking_management/screen/home_screen.dart';
 //import 'package:booking_management/screen/profile_screen.dart';
@@ -61,18 +61,7 @@ class _BottomNavigationBarWidgetState
             label: 'Books',
             backgroundColor: Colors.white,
           ),
-          // BottomNavigationBarItem(
-          //   icon: DecoratedIcon(
-          //     icon: Icon(
-          //       Icons.person_2_rounded,
-          //       color: _selectedIndex == 2 ? TColors.primary : Colors.white,
-          //       size: 30,
-          //     ),
-          //     decoration: const IconDecoration(border: IconBorder()),
-          //   ),
-          //   label: 'Profile',
-          //   backgroundColor: Colors.white,
-          // ),
+
           BottomNavigationBarItem(
             icon: DecoratedIcon(
               icon: Icon(

@@ -1,4 +1,4 @@
-import 'package:booking_management/models/appTheme.dart';
+import 'package:booking_management/models/app_theme.dart';
 //import 'package:booking_management/screen/booklist_screen.dart';
 import 'package:flutter/material.dart';
 
