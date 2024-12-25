@@ -1,27 +1,4 @@
 
-// class Book {
-//   final String title;
-//   final String author;
-//   final List<String> genres;
-//   final String coverImage;
-//   final String description;
-//   final DateTime publicationDate;
-//   DateTime? returnDate;
-//   bool isBorrowed;
-//   bool isReserved;
-
-//   Book({
-//     required this.title,
-//     required this.author,
-//     required this.genres,
-//     required this.coverImage,
-//     required this.publicationDate,
-//     required this.description,
-//     this.returnDate,
-//     this.isReserved = false,
-//     this.isBorrowed = false,
-//   });
-// }
 import 'package:booking_management/models/borrowStatus.dart';
 import 'package:booking_management/models/genre.dart';
 
