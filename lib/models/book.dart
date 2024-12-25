@@ -15,6 +15,7 @@ class Book {
   DateTime publicationDate; 
 
   Book({
+
     required this.title,
     required this.author,
     required this.genres,
